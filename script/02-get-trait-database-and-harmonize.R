@@ -73,9 +73,58 @@ check = which(unlist(lapply(dat_list, function(x){
 dat_list[check[1]]
 
 # make a table that is going to be harmonized by hand
-work = data.frame(uniquenames,
-                  finalname = "")
-
+# work = data.frame(uniquenames,
+#                   finalname = "")
 # write.csv(work, "data/harmonized-names.csv", row.names = FALSE)
 
+names_final = read.csv("data/harmonized-names.csv")
+
+# run over names_final and replace names
+for (i in seq_along(names_final$uniquenames)) {
+  
+  original_name = names_final$uniquenames[i]
+  
+  final_name = names_final$finalname[i]
+  
+  dat_list = lapply(dat_list, function(x){
+    names(x)[names(x) == original_name] = final_name
+    x
+  })
+  
+}
+
+dat = rowbind(dat_list)
+
+
+table(dat$crop)
+
+table(dat$gender)
+
+
+plot(as.numeric(dat$trial_longitude),
+     as.numeric(dat$trial_latitude))
+
+hist(as.numeric(dat$trial_longitude))
+summary(as.numeric(dat$trial_longitude))
+
+dat$longitude = as.numeric(dat$trial_longitude)
+
+dat$longitude = ifelse(dat$longitude < 32 |
+                         dat$longitude > 48, NA,
+                       dat$longitude)
+
+dat$latitude = as.numeric(dat$trial_latitude)
+
+dat$latitude = ifelse(dat$latitude < 3 |
+                         dat$latitude > 14, NA,
+                       dat$latitude)
+
+plot(as.numeric(dat$longitude),
+     as.numeric(dat$latitude))
+
+keep = !grepl("drop", names(dat))
+
+dat = dat[keep]
+
+write.csv(dat, "data/tricot-data-ethiopia.csv", row.names = FALSE)
 
