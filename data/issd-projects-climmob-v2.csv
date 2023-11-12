@@ -1,5 +1,5 @@
 ﻿User,Country,Latitude,Longitude,Project,Organization,Creation date,Crop,Number of varieties,Observers,Collected,Man,Woman,Completed
-yosefgk@yahoo.com,ET,9.081194107,42.1301385,surghum,Oromia east,05/12/2017,otros,10,20,20,12,8,100%
+yosefgk@yahoo.com,ET,9.081194107,42.1301385,surghum,Oromia east,05/12/2017,sorghum,10,20,20,12,8,100%
 yosefgk@yahoo.com,ET,8.950987115,38.79030875,crowd_wheat_geregera_2012,Bioversity,15/04/2016,trigo,4,200,0,0,0,0%
 yosefgk@yahoo.com,ET,10.63980403,37.42800206,amh_issd_bdu_na_finger_millet,ISSD-BDU,05/12/2017,otros,10,200,0,0,0,0%
 yosefgk@yahoo.com,ET,8.988969,38.7518546,crowdsourcing_wheat_amhara_2013,Biversity,15/04/2016,trigo,0,0,0,0,0,0%
@@ -14,7 +14,7 @@ mtilahun279@gmail.com,ET,8.864156511,39.71315831,illu_bure_dw_2018,Bio,20/07/201
 mtilahun279@gmail.com,ET,7.820644029,38.65847081,illu_bure_teff_2018,Bioversity,20/07/2018,otros,26,21,0,0,0,0%
 mtilahun279@gmail.com,ET,9.21135382,37.60378331,illu_hurumu_dw_2018,Bioversity,20/07/2018,trigo,24,100,0,0,0,0%
 mtilahun279@gmail.com,ET,9.21135382,38.65847081,illu_bure_millet_2018,Bioversity,20/07/2018,otros,16,30,0,0,0,0%
-mtilahun279@gmail.com,ET,8.1687891,36.90065831,illuababora_teff_2018,Bioversity,17/12/2018,otros,35,58,58,50,8,100%
+mtilahun279@gmail.com,ET,8.1687891,36.90065831,illuababora_teff_2018,Bioversity,17/12/2018,teff,35,58,58,50,8,100%
 mtilahun279@gmail.com,ET,9.21135382,38.65847081,jimma_omonada_dw_2018,Bioversity,20/07/2018,trigo,24,181,0,0,0,0%
 mtilahun279@gmail.com,ET,8.516630776,37.60378331,illu_bure_sorghum_2018,Bioversity,20/07/2018,otros,30,75,0,0,0,0%
 mtilahun279@gmail.com,ET,8.864156511,39.01003331,illu_bured_millet_2018,Bioversity,20/07/2018,otros,16,30,0,0,0,0%
@@ -30,18 +30,18 @@ mtilahun279@gmail.com,ET,8.864156511,37.95534581,jimma_tiru_afeta_teff_2018,Biov
 mtilahun279@gmail.com,ET,7.820644029,39.36159581,illuababora_bure_wheat_2018,Bioversity,17/12/2018,trigo,23,50,50,41,9,100%
 mtilahun279@gmail.com,ET,9.21135382,39.36159581,illubabor_hur_fababean_2018,B,23/07/2018,frijol,12,52,0,0,0,0%
 mtilahun279@gmail.com,ET,7.472208161,39.36159581,jimma_omonadadist_teff_2018,Biov,25/07/2018,otros,35,69,0,0,0,0%
-mtilahun279@gmail.com,ET,9.21135382,39.01003331,jimmazuria_omonada_tef_2018,Bioversity,17/12/2018,otros,35,69,69,63,6,100%
+mtilahun279@gmail.com,ET,9.21135382,39.01003331,jimmazuria_omonada_tef_2018,Bioversity,17/12/2018,teff,35,69,69,63,6,100%
 mtilahun279@gmail.com,ET,7.820644029,39.36159581,illu_hurumu_haricotbean_2018,Bioversity,20/07/2018,frijol,31,34,0,0,0,0%
-mtilahun279@gmail.com,ET,9.904713514,37.95534581,illuababora_bure_millet_2018,Bioversity,17/12/2018,otros,15,30,30,26,4,100%
+mtilahun279@gmail.com,ET,9.904713514,37.95534581,illuababora_bure_millet_2018,Bioversity,17/12/2018,fingermillet,15,30,30,26,4,100%
 mtilahun279@gmail.com,ET,7.820644029,39.18581456,illubabor_hurumudist_dw_2018,Bio,23/07/2018,trigo,23,100,0,0,0,0%
-mtilahun279@gmail.com,ET,9.21135382,39.01003331,illuababora_bure_sorghum_2018,Bioversity,17/12/2018,otros,28,75,75,53,22,100%
+mtilahun279@gmail.com,ET,9.21135382,39.01003331,illuababora_bure_sorghum_2018,Bioversity,17/12/2018,sorghum,28,75,75,53,22,100%
 mtilahun279@gmail.com,ET,9.904713514,38.30690831,illuababora_hurumu_wheat_2018,Bioversity,17/12/2018,trigo,27,100,100,86,14,100%
 mtilahun279@gmail.com,ET,9.21135382,38.30690831,jimma_tiruafetadist_teff_2018,Biov,25/07/2018,otros,35,143,0,0,0,0%
 mtilahun279@gmail.com,ET,9.037796997,37.60378331,jimmazuria_omonada_wheat_2018,Bioversity,17/12/2018,trigo,23,181,181,176,5,100%
-mtilahun279@gmail.com,ET,7.646461655,39.01003331,illuababora_hurumu_barley_2018,Bioversity,17/12/2018,otros,17,27,27,19,8,100%
+mtilahun279@gmail.com,ET,7.646461655,39.01003331,illuababora_hurumu_barley_2018,Bioversity,17/12/2018,barley,17,27,27,19,8,100%
 mtilahun279@gmail.com,ET,8.516630776,40.06472081,illubabor_buredist_millet_2018,Biov,24/07/2018,otros,15,30,0,0,0,0%
 mtilahun279@gmail.com,ET,8.516630776,38.13112706,illubabor_hurumu_fababean_2018,Bioversity,23/07/2018,frijol,10,52,0,0,0,0%
-mtilahun279@gmail.com,ET,9.21135382,38.65847081,jimmazuria_tiruafeta_teff_2018,Bioversity,17/12/2018,otros,35,143,141,118,23,98%
+mtilahun279@gmail.com,ET,9.21135382,38.65847081,jimmazuria_tiruafeta_teff_2018,Bioversity,17/12/2018,teff,35,143,141,118,23,98%
 mtilahun279@gmail.com,ET,8.1687891,39.01003331,illubabor_buredist_sorghum_2018,Bio,24/07/2018,otros,28,75,0,0,0,0%
 mtilahun279@gmail.com,ET,9.904713514,39.01003331,illuababora_hurumu_fababean_2018,Bioversity,17/12/2018,frijol,12,52,52,51,1,100%
 mtilahun279@gmail.com,ET,9.21135382,39.36159581,illubabor_buree_haricotbean_2018,Bioversity,23/07/2018,frijol,28,74,0,0,0,0%
@@ -50,7 +50,7 @@ mtilahun279@gmail.com,ET,9.558210276,39.36159581,illuababora_bure_haricotbean_20
 mtilahun279@gmail.com,ET,8.516630776,39.01003331,jimma_tiru_afeta_haricotbean_2018,Bioversity,20/07/2018,frijol,31,107,0,0,0,0%
 mtilahun279@gmail.com,ET,9.904713514,38.30690831,jimma_omonadadist_haricotbean_2018,Biov,23/07/2018,frijol,28,107,0,0,0,0%
 mtilahun279@gmail.com,ET,9.21135382,39.36159581,illuababora_hurumu_haricotbean_2018,Bioversity,17/12/2018,frijol,28,34,33,30,3,97%
-mtilahun279@gmail.com,ET,10.25085123,39.01003331,illubabor_bureandhurumudis_teff_2018,biov,25/07/2018,otros,35,58,58,55,3,100%
+mtilahun279@gmail.com,ET,10.25085123,39.01003331,illubabor_bureandhurumudis_teff_2018,biov,25/07/2018,teff,35,58,58,55,3,100%
 mtilahun279@gmail.com,ET,9.558210276,37.95534581,illubabor_hurumudist_haricotbean_2018,Biov,23/07/2018,frijol,28,34,0,0,0,0%
 mtilahun279@gmail.com,ET,8.516630776,39.01003331,jimmazuria_tiruafeta_haricotbean_2018,Bioversity,17/12/2018,frijol,29,107,105,94,11,98%
 basofaddis@gmail.com,ET,8.799020077,38.65847081,crowddw,Ethiopinan biodiversity,15/04/2016,trigo,0,0,0,0,0,0%

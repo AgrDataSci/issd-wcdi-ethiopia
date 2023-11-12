@@ -7,7 +7,7 @@ projects = read.csv("data/issd-projects-climmob-v2.csv")
 project_names = projects$Project
 
 project_names = paste0("data/raw/",
-                       rep(c("ET-package_", "ETH-"), times = length(project_names)), 
+                       rep(c("ET-package_", "ET-"), times = length(project_names)), 
                        rep(project_names, each = 2), 
                        ".json")
 
