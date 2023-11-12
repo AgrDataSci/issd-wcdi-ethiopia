@@ -126,5 +126,31 @@ keep = !grepl("drop", names(dat))
 
 dat = dat[keep]
 
-write.csv(dat, "data/tricot-data-ethiopia.csv", row.names = FALSE)
+
+sort(unique(unlist(dat[,c("variety_a","variety_b","variety_c")])))
+
+varieties = data.frame(crop = rep(dat$crop, 3),
+                       variety = unlist(dat[,c("variety_a","variety_b","variety_c")]),
+                       variety_harmonized = "")
+
+
+varieties$variety = tolower(varieties$variety)
+
+varieties$variety = gsub("  ", " ", varieties$variety)
+
+varieties = split(varieties, varieties$crop)
+
+varieties = lapply(varieties, function(x){
+  x = x[!duplicated(x$variety), ]
+  x = x[order(x$variety), ]
+})
+
+varieties = do.call("rbind", varieties)
+
+varieties = na.omit(varieties)
+
+write.csv(varieties, "data/variety-names-tricot-ethiopia.csv", row.names = FALSE)
+
+
+#write.csv(dat, "data/tricot-data-ethiopia.csv", row.names = FALSE)
 
