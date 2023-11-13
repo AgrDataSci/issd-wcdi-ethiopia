@@ -3,8 +3,8 @@
 # get list of column names in the data sets to 
 # harmonize them
 library("jsonlite")
+library("janitor")
 library("gosset")
-library("jsonlite")
 
 list.files("data")
 
