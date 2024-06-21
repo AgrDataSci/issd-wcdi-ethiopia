@@ -1,10 +1,11 @@
 # ...............................
 # ...............................
-# get list of column names in the data sets to 
-# harmonize them
+# this script will put the data together combining variable ids 
+# and will standardize the list of varieties
 library("jsonlite")
 library("janitor")
 library("gosset")
+
 
 list.files("data")
 
@@ -151,6 +152,5 @@ varieties = na.omit(varieties)
 
 write.csv(varieties, "data/variety-names-tricot-ethiopia.csv", row.names = FALSE)
 
-
-#write.csv(dat, "data/tricot-data-ethiopia.csv", row.names = FALSE)
+write.csv(dat, "data/tricot-data-preclean.csv", row.names = FALSE)
 
