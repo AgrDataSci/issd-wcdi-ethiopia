@@ -32,7 +32,9 @@ names(tricot)
 
 sort(table(tricot$crop))
 
-table(tricot$crop, tricot$gender)
+x = table(tricot$crop, tricot$gender)
+
+write.csv(data.frame(x), "output/gender-dist.csv")
 
 tricot = tricot[tricot$crop != "oat", ]
 

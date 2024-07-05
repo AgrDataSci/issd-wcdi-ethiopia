@@ -7,8 +7,11 @@ library("janitor")
 library("gosset")
 library("readxl")
 library("ClimMobTools")
+source("script/helper-01-function.R")
 
 dat = read.csv("data/tricot-data-preclean.csv")
+
+table(dat$crop)
 
 variety = read_excel("data/variety-names-tricot-ethiopia.xlsx", sheet = 1)
 
@@ -19,7 +22,6 @@ names(variety) = make_clean_names(names(variety))
 head(variety)
 
 variety = variety[!is.na(variety$variety_harmonized), ]
-
 
 unique(dat$crop)
 
@@ -58,8 +60,23 @@ for(i in seq_along(variety$variety)) {
                          variety$variety_harmonized[i],
                          dat$variety_c)
   
+  
+  dat$crop = ifelse(dat$variety_a == variety$variety_harmonized[i] &
+                      dat$crop == variety$crop[i],
+                    variety$crop_harmonized[i],
+                    dat$crop)
+  
+  
 }
 
+# check how many entries per crop are not in the list
+outlist = unlist(dat[pack_index]) %in% unique(variety$variety)
+
+var = unlist(dat[pack_index])[outlist]
+
+crop = rep(dat$crop, 3)[outlist]
+
+table(var, crop)
 
 # remove entries that don't have an existing cleared variety
 dat[pack_index] = lapply(dat[pack_index], function(x){
@@ -77,10 +94,10 @@ dat = dat[keep, ]
 
 sort(table(dat$crop))
 
-
 # check overall performance data
 sel = union(names(dat)[1:8], 
             names(dat)[grepl("overall_", names(dat))])
+sel = union(sel, c("longitude", "latitude"))
 sel = union(sel, names(dat))
 
 dat = dat[sel]
@@ -104,7 +121,35 @@ dat = dat[-rmv]
 
 names(dat)
 
-write.csv(dat, "data/tricot-data.csv", row.names = FALSE)
+# ..............................
+# ..............................
+# check planting dates #####
+unique(dat$planting_date)
+
+
+
+# ..............................
+# ..............................
+# check GPS data #####
+# remove points with no decimals
+dat$longitude[is.na(dat$longitude)] = 0
+keep = unlist(lapply(dat$longitude, decimalplaces)) > 0
+
+dat$latitude[is.na(dat$latitude)] = 0
+
+keep = unlist(lapply(dat$latitude, decimalplaces)) > 0 & keep
+
+table(keep)
+
+dat$longitude[!keep] = NA
+dat$latitude[!keep] = NA
+
+#dat$latitude[dat$latitude == 12.41176562] = NA
+#dat$longitude[is.na(dat$latitude)] = NA
+
+plot(dat$longitude, dat$latitude)
+
+#write.csv(dat, "data/tricot-data.csv", row.names = FALSE)
 
 
 

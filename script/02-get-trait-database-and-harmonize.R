@@ -54,6 +54,8 @@ for(i in seq_along(projects$Project)) {
   
   names(dat) = make_clean_names(names(dat))
   
+  dat$trial = projects$Project[i]
+  
   dat_list[[i]] = dat
   
 }
