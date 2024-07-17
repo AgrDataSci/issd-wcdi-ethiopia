@@ -7,8 +7,9 @@ library("janitor")
 library("gosset")
 library("readxl")
 library("ClimMobTools")
+library("tidyverse")
 source("script/helper-01-function.R")
-
+source("https://raw.githubusercontent.com/AgrDataSci/ClimMob-analysis/master/modules/01_functions.R")
 dat = read.csv("data/tricot-data-preclean.csv")
 
 table(dat$crop)
@@ -124,9 +125,36 @@ names(dat)
 # ..............................
 # ..............................
 # check planting dates #####
-unique(dat$planting_date)
+sort(unique(dat$planting_date))
+
+sum(is.na(dat$planting_date))
 
 
+boxplot(as.Date(dat$planting_date) ~ dat$trial)
+
+boxplot(as.Date(dat$planting_date) ~ dat$year)
+
+dat$year = as.numeric(gsub("([0-9]+).*$", "\\1", dat$trial))
+
+date = as.Date(dat$planting_date)
+
+date = ifelse(date > "2020-01-01", NA, date)
+
+boxplot(date ~ dat$trial)
+
+quantile(as.integer(as.Date(dat$planting_date)), na.rm = T)
+
+
+
+pdates = 
+  dat %>% 
+  group_by(trial) %>% 
+  summarise(crop = unique(crop), 
+            planting_date_avg = mean(as.Date(planting_date), na.rm = TRUE),
+            planting_date_min = min(as.Date(planting_date), na.rm = TRUE),
+            planting_date_max = max(as.Date(planting_date), na.rm = TRUE))
+
+write.csv(pdates, "data/planting-dates.csv", row.names = TRUE)
 
 # ..............................
 # ..............................
@@ -141,13 +169,31 @@ keep = unlist(lapply(dat$latitude, decimalplaces)) > 0 & keep
 
 table(keep)
 
+plot(dat$longitude, dat$latitude)
+
 dat$longitude[!keep] = NA
 dat$latitude[!keep] = NA
 
-#dat$latitude[dat$latitude == 12.41176562] = NA
-#dat$longitude[is.na(dat$latitude)] = NA
+dat$latitude = ifelse(dat$latitude > 11.5 & dat$latitude < 12 &
+                        dat$longitude > 39, NA, dat$latitude)
+dat$longitude[dat$longitude > 43] = NA
+dat$latitude[is.na(dat$longitude)] = NA
 
 plot(dat$longitude, dat$latitude)
+
+plot_map(dat, xy = c("longitude", "latitude"))
+
+xy = 
+  dat %>% 
+  group_by(district, village) %>% 
+  summarise(district = unique(district),
+            village = unique(village),
+            district_harmonized = "",
+            village_harmonized = "",
+            longitute = mean(longitude, na.rm = TRUE),
+            latitude = mean(latitude, na.rm = TRUE))
+
+write.csv(xy, "data/coordinates.csv", row.names = TRUE)
 
 #write.csv(dat, "data/tricot-data.csv", row.names = FALSE)
 
