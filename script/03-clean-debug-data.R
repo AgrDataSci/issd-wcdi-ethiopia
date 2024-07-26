@@ -10,6 +10,7 @@ library("ClimMobTools")
 library("tidyverse")
 source("script/helper-01-function.R")
 source("https://raw.githubusercontent.com/AgrDataSci/ClimMob-analysis/master/modules/01_functions.R")
+
 dat = read.csv("data/tricot-data-preclean.csv")
 
 table(dat$crop)
@@ -34,6 +35,30 @@ variety$variety_harmonized = gsub("- ", "-", variety$variety_harmonized)
 
 variety$variety_harmonized = gsub(" -", "-", variety$variety_harmonized)
 
+# read file with planting dates 
+list.files("data")
+
+pdates = read.csv("data/planting-dates-fixed-by-ethiopian-team.csv")
+
+names(pdates)
+
+head(pdates)
+
+names(pdates) = make_clean_names(names(pdates))
+
+names(pdates)
+
+pdates$avg = as_date(pdates$new_edited_date, format = "%d/%m/%Y")
+pdates$min = as_date(pdates$planting_date_min_edited, format = "%d/%m/%Y")
+pdates$max = as_date(pdates$planting_date_max_edited, format = "%d/%m/%Y")
+
+x = rep(pdates$trial, 3)
+y = c(pdates$avg, pdates$max, pdates$min)
+
+boxplot(y ~ x)
+
+# ......................................
+# ......................................
 # run over the list of varieties and crops 
 # and replace names with correct nomenclature
 names(dat)
@@ -125,36 +150,57 @@ names(dat)
 # ..............................
 # ..............................
 # check planting dates #####
-sort(unique(dat$planting_date))
+# sort(unique(dat$planting_date))
+# 
+# sum(is.na(dat$planting_date))
+# 
+# boxplot(as.Date(dat$planting_date) ~ dat$trial)
+# 
+# boxplot(as.Date(dat$planting_date) ~ dat$year)
+# 
+# dat$year = as.numeric(gsub("([0-9]+).*$", "\\1", dat$trial))
+# 
+# date = as.Date(dat$planting_date)
+# 
+# date = ifelse(date > "2020-01-01", NA, date)
+# 
+# boxplot(date ~ dat$trial)
+# 
+# quantile(as.integer(as.Date(dat$planting_date)), na.rm = T)
+# 
+# pdates = 
+#   dat %>% 
+#   group_by(trial) %>% 
+#   summarise(crop = unique(crop), 
+#             planting_date_avg = mean(as.Date(planting_date), na.rm = TRUE),
+#             planting_date_min = min(as.Date(planting_date), na.rm = TRUE),
+#             planting_date_max = max(as.Date(planting_date), na.rm = TRUE))
+# 
+# write.csv(pdates, "data/planting-dates.csv", row.names = TRUE)
 
-sum(is.na(dat$planting_date))
+# we will use the planting windows provided by the 
+# Ethiopian team as most of the dates are not provided or 
+# not recorded well due to differences with the Ethiopian calendar
+trial = pdates$trial
 
+for (i in seq_along(trial)) {
+  
+  s = sd(c(pdates$avg[i], pdates$min[i], pdates$max[i]))
+  n = sum(dat$trial == trial[i])
+  
+  d = as.integer(rnorm(n, sd = s))
+  
+  dates = pdates$avg[i] + d
+  
+  dat$planting_date[dat$trial == trial[i]] = dates
+  
+}
+
+dat$planting_date = as_date(as.integer(dat$planting_date))
+
+dat$year = year(dat$planting_date)
 
 boxplot(as.Date(dat$planting_date) ~ dat$trial)
-
-boxplot(as.Date(dat$planting_date) ~ dat$year)
-
-dat$year = as.numeric(gsub("([0-9]+).*$", "\\1", dat$trial))
-
-date = as.Date(dat$planting_date)
-
-date = ifelse(date > "2020-01-01", NA, date)
-
-boxplot(date ~ dat$trial)
-
-quantile(as.integer(as.Date(dat$planting_date)), na.rm = T)
-
-
-
-pdates = 
-  dat %>% 
-  group_by(trial) %>% 
-  summarise(crop = unique(crop), 
-            planting_date_avg = mean(as.Date(planting_date), na.rm = TRUE),
-            planting_date_min = min(as.Date(planting_date), na.rm = TRUE),
-            planting_date_max = max(as.Date(planting_date), na.rm = TRUE))
-
-write.csv(pdates, "data/planting-dates.csv", row.names = TRUE)
 
 # ..............................
 # ..............................
@@ -193,9 +239,80 @@ xy =
             longitute = mean(longitude, na.rm = TRUE),
             latitude = mean(latitude, na.rm = TRUE))
 
-write.csv(xy, "data/coordinates.csv", row.names = TRUE)
+# write.csv(xy, "data/coordinates.csv", row.names = TRUE)
 
 #write.csv(dat, "data/tricot-data.csv", row.names = FALSE)
 
+sum(is.na(dat$longitude))
+
+names(dat)
+
+sel = union(c("trial", "year", "crop", "package_id", "longitude", "latitude", "planting_date",
+        "district", "village", "age", "gender"),
+      names(dat))
+
+
+dat = dat[sel]
+
+
+sum(is.na(dat$planting_date))
+
+
+sum(is.na(dat$longitude))
+
+
+dat$district = tolower(dat$district)
+
+dat$village = tolower(dat$village)
+
+dat$village = str_replace_all(dat$village, "[[:punct:]]", " ")
+
+dat$district = str_replace_all(dat$district, "[[:punct:]]", " ")
+
+dat$location = paste(dat$district, dat$village)
+
+locations = unique(paste(dat$district, dat$village))
+
+for (i in seq_along(locations)) {
+  
+  dat$longitude = ifelse(is.na(dat$longitude) & dat$location == locations[i],
+                         mean(dat$longitude[dat$location == locations[i]], na.rm = TRUE),
+                         dat$longitude)
+  
+  dat$latitude = ifelse(is.na(dat$latitude) & dat$location == locations[i],
+                         mean(dat$latitude[dat$location == locations[i]], na.rm = TRUE),
+                         dat$latitude)
+  
+}
+
+
+sum(is.na(dat$longitude))
+
+# do it by trial
+for (i in seq_along(trial)) {
+  
+  dat$longitude = ifelse(is.na(dat$longitude) & dat$trial == trial[i],
+                         mean(dat$longitude[dat$trial == trial[i]], na.rm = TRUE),
+                         dat$longitude)
+  
+  dat$latitude = ifelse(is.na(dat$latitude) & dat$trial == trial[i],
+                        mean(dat$latitude[dat$trial == trial[i]], na.rm = TRUE),
+                        dat$latitude)
+  
+}
+
+sum(is.na(dat$longitude))
+
+
+plot_map(dat, xy = c("longitude", "latitude"))
+
+
+sum(is.na(dat$year))
+
+table(is.na(dat$year), dat$crop)
+
+dat = dat[order(dat$crop),]
+
+write.csv(dat, "data/tricot-data.csv")
 
 
