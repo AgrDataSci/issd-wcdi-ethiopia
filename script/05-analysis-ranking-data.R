@@ -210,11 +210,13 @@ for (f in seq_along(crop)) {
   # best varieties but in the worst
   # here we will see if the top varieties are the same for both genders
   # and the percent of varieties in the top that occurr in man and woman group
+  gender_class = table(dat$gender)
+  
   top = ceiling(length(itemnames) * 0.25)
   
   top_share = lapply(R, function(x){
     
-    g = dat$gender == "Man"
+    g = dat$gender == names(gender_class)[[1]]
     
     m1 = PlackettLuce(x[g,])
     
@@ -271,8 +273,6 @@ for (f in seq_along(crop)) {
   }
   
   # now run over the groups
-  gender_class = table(dat$gender)
-  
   for (i in seq_along(gender_class)) {
     
     R_subset = lapply(R, function(x){
@@ -302,8 +302,6 @@ for (f in seq_along(crop)) {
       
     }
     
-    
-    
   }
   
   kendall$crop = crop[f]
@@ -326,34 +324,6 @@ for (f in seq_along(crop)) {
          units = "cm")
   
   write.csv(kendall, paste0(outputdir, "/kendall-correlation.csv"))
-  
-  
-  # 
-  # ...................................
-  # now using PCA 
-  # coeffs = lapply(mod, function(x){
-  #   resample(x, bootstrap = TRUE, seed = 1424, n1 = n)
-  # })
-  # 
-  # coeffs = do.call(cbind, coeffs)
-  # 
-  # rmv = which(names(coeffs) == "item")[-1]
-  # 
-  # coeffs = coeffs[-rmv]
-  # 
-  # names(coeffs)[-1] = traitlabels
-  # 
-  # pc = princomp(coeffs[-1], cor = FALSE)
-  # 
-  # pcplot = plot_pca(pc)
-  # 
-  # ggsave(paste0(outputdir, "/biplot-performance-all-traits.pdf"),
-  #        plot = pcplot,
-  #        height = 21,
-  #        width = 21,
-  #        units = "cm")
-  # 
-  
   
   # ...........................................
   # ...........................................
@@ -408,110 +378,40 @@ for (f in seq_along(crop)) {
          units = "cm")
   
   
-  # .........................................
-  # .........................................
-  # PlackettLuce tree ####
-  G = rank_tricot(items = pack_index,
-                  input = trait_list[[ov]]$string,
-                  data = dat,
-                  validate.rankings = TRUE,
-                  group = TRUE)
+  # ...................................
+  # ...................................
+  # test the third hypothesis ####
+  # 3. They appreciate novelty in terms of the age of varieties; 
   
-  pld = data.frame(G, Gender = as.factor(dat$gender))
+  # now check if there is difference in rankings for the top 25% of 
+  # varieties, this because the difference might not be in the 
+  # best varieties but in the worst
+  # here we will see if the top varieties are the same for both genders
+  # and the percent of varieties in the top that occurr in man and woman group
   
-  tree = pltree(G ~ Gender, data = pld, gamma = TRUE)
+  top_share = lapply(R, function(x){
+    
+    g = dat$gender == "Man"
+    
+    m1 = PlackettLuce(x[g,])
+    
+    m2 = PlackettLuce(x[!g,])
+    
+    c1 = coefficients(m1, log = F)
+    
+    c2 = coefficients(m2, log = F)
+    
+    sum(names(rev(sort(c1)))[1:top] %in% names(rev(sort(c2)))[1:top]) / top
+    
+  })
+  
+  share_top = data.frame(trait = traitlabels, 
+                         share_top = unlist(top_share),
+                         n_top = top,
+                         crop = crop[f])
   
   
-  # 
-  # tree
-  # 
-  # ptree = plot(tree, log = TRUE, ci.level = 0.05, ref = "Local")
-  # ptree
-  # ggsave(filename = "output/pltree-marketability-covars.pdf",
-  #        plot = ptree,
-  #        units = "cm",
-  #        height = 30,
-  #        width = 40)
   
-  # .........................................
-  # .........................................
-  # Pairwise comps matrix using worth ####
-  models = list()
-  plots = list()
-  
-  for(k in seq_along(gender_class)) {
-    
-    g = pld[pld$Gender == names(gender_class[k]), "G"]
-    
-    mod = PlackettLuce(g)
-    
-    models[[k]] = mod
-    
-    coefs = coefficients(mod, log = FALSE)
-    
-    pair_worth = pairwise_probs(coefs)
-    
-    # plot the results
-    lvls = dimnames(pair_worth)[[1]]
-    
-    pair_dat = data.frame(player1 = rep(lvls, times = length(lvls)), 
-                          player2 = rep(lvls, each = length(lvls)),
-                          worth = as.vector(pair_worth))
-    
-    pair_dat
-    
-    pair_dat$player1 = factor(pair_dat$player1, levels = lvls)
-    
-    pair_dat$player2 = factor(pair_dat$player2, levels = rev(lvls))
-    
-    pair_dat$worth = round(pair_dat$worth, 2)
-    
-    p = ggplot(pair_dat, 
-               aes(x = player2, 
-                   y = player1,
-                   fill = worth,
-                   label = worth)) +
-      geom_tile(show.legend = FALSE) + 
-      geom_text() +
-      scale_fill_gradient2(low = "#b2182b", 
-                           high = "#2166ac", 
-                           na.value = "white") +
-      scale_x_discrete(position = "top") +
-      theme_bw() +
-      theme(axis.text = element_text(color = "grey10"),
-            strip.text.x = element_text(color = "grey10"),
-            axis.text.x = element_text(angle = 90, hjust = 0),
-            panel.grid = element_blank()) +
-      labs(x = "", 
-           y = "",
-           title = paste0("(", LETTERS[i], ") ", 
-                          names(gender_class[k]),
-                          ", n = ",
-                          as.integer(gender_class[k])),
-           fill = "")
-    
-    plots[[k]] = p
-    
-  }
-  
-  p = plots[[1]] + plots[[2]] 
-  
-  p
-  
-  ggsave(paste0(outputdir, "/pairwise-probabilities-overall.pdf"),
-         plot = p,
-         width = 35,
-         height = 18,
-         units = "cm",
-         dpi = 600)
-  
-  # .........................................
-  # .........................................
-  # Regret ####
-  reg = regret(models)
-  
-  write.csv(reg, 
-            paste0(outputdir, "/regret-analysis.csv"), row.names = FALSE)
   
 
   
@@ -519,49 +419,3 @@ for (f in seq_along(crop)) {
 
 
 
-# # get spider plot
-# coefs = data.frame()
-# 
-# for(v in seq_along(itemnames)){
-#   
-#   value = lapply(mod, function(x) coefficients(x, ref = v))
-#   
-#   value = as.data.frame(t(do.call(rbind, value)))
-#   
-#   names(value) = traitlabels
-#   
-#   value$item = rownames(value)
-#   
-#   coefs = rbind(coefs, value)
-#   
-# }
-# 
-# coefs = split(coefs, coefs$item)
-# 
-# coefs = lapply(coefs, function(x){
-#   colMeans(x[-ncol(x)])
-# })
-# 
-# coefs = as.data.frame(do.call(rbind, coefs))
-# 
-# coefs$item = rownames(coefs)
-# 
-# coefs = 
-#   coefs %>% 
-#   mutate_at(vars(-item), scales::rescale) %>% 
-#   select(-item)
-# 
-# coefs = rbind(rep(1.1, ncol(coefs)) , rep(0, ncol(coefs)) , coefs)
-# 
-# radarchart(coefs)
-# 
-# legend(x=0.7, y=1, legend = rownames(coefs[-c(1,2), ]))
-# 
-# ggradar(coefs,
-#         font.radar = "roboto",
-#         grid.label.size = 13,  # Affects the grid annotations (0%, 50%, etc.)
-#         axis.label.size = 8.5, # Afftects the names of the variables
-#         group.point.size = 3   # Simply the size of the point 
-# )
-# 
-# 
