@@ -63,11 +63,25 @@ write.csv(data.frame(x), "output/gender-dist.csv")
 
 tricot = tricot[tricot$crop != "oat", ]
 
+tricot = tricot[tricot$crop != "wheat", ]
+
+tricot$crop = ifelse(tricot$crop == "haricotbean",
+                     "commonbean",
+                     tricot$crop)
+
 rmv = grep("perception", names(tricot))
 
 tricot = tricot[,-rmv]
 
 crop = unique(tricot$crop) 
+
+age_crops = data.frame()
+
+kendall_crops = data.frame()
+
+ll_crops = data.frame()
+
+same_variety = data.frame()
 
 for (f in seq_along(crop)) {
   
@@ -95,6 +109,10 @@ for (f in seq_along(crop)) {
   variety_f = variety_f[!is.na(variety_f$variety_harmonized), ]
   
   variety_f = variety_f[!duplicated(variety_f$variety_harmonized), ]
+  
+  variety_f$variety = variety_f$variety_harmonized
+  
+  variety_f$release_year = variety_f$variety_release_date
   
   # get the list of traits
   trait_list = getTraitList(dat, 
@@ -173,6 +191,10 @@ for (f in seq_along(crop)) {
   ov = which(traitlabels == "Overall Performance")
   
   traitlabels
+  
+  if (length(traitlabels) <= 1) {
+    next
+  }
   
   # ........................................
   # ........................................
@@ -307,14 +329,18 @@ for (f in seq_along(crop)) {
   kendall$crop = crop[f]
   
   kendall_plot = 
-    ggplot(kendall, aes(y = trait, x = kendallTau, fill = group)) +
-    geom_boxplot() +
+    ggplot(kendall, aes(y = trait, x = kendallTau, 
+                        fill = group, color = group)) +
+    geom_boxplot(alpha = 0.2) +
     theme_minimal() +
     scale_fill_manual(values = c("grey50","#225ea8", "#e31a1c")) +
+    scale_color_manual(values = c("grey50","#225ea8", "#e31a1c")) +
     labs(y = "", x = "Kendall correlation") +
     theme(legend.title = element_blank(),
           legend.position = "bottom",
           text = element_text(colour = "grey20"))
+  
+  kendall_plot
   
   
   ggsave(paste0(outputdir, "/kendall-correlation.pdf"),
@@ -324,6 +350,28 @@ for (f in seq_along(crop)) {
          units = "cm")
   
   write.csv(kendall, paste0(outputdir, "/kendall-correlation.csv"))
+  
+  # run anovas over the traits
+  kendall_anovas = data.frame()
+  
+  for(z in seq_along(traitlabels)) {
+    
+    if (traitlabels[z] == traitlabels[ov]) next
+    
+    x = summary(aov(glm(kendallTau ~ group, 
+                        data = kendall[kendall$trait == traitlabels[z], ])))
+    
+    x = as.data.frame(x[[1]])[1,]
+    
+    x$trait = traitlabels[z]
+    
+    kendall_anovas = rbind(kendall_anovas, x)
+    
+  }
+  
+  kendall_anovas$stars = gosset:::.stars_pval(kendall_anovas$`Pr(>F)`)
+  
+  write.csv(kendall_anovas, paste0(outputdir, "/kendall-anovas-gender.csv"))
   
   # ...........................................
   # ...........................................
@@ -371,6 +419,8 @@ for (f in seq_along(crop)) {
   
   p = plots_gender[[1]] + plots_gender[[2]] 
   
+  p
+  
   ggsave(paste0(outputdir, "/biplot-trait-performance-gender.pdf"),
          plot = p,
          height = 18,
@@ -388,34 +438,202 @@ for (f in seq_along(crop)) {
   # best varieties but in the worst
   # here we will see if the top varieties are the same for both genders
   # and the percent of varieties in the top that occurr in man and woman group
+  g = dat$gender == names(gender_class)[[1]]
   
-  top_share = lapply(R, function(x){
+  dat$year[is.na(dat$year)] = min(dat$year, na.rm = TRUE)
+  
+  y = unique(dat$year)
+  
+  # run over years of trials
+  age_top = data.frame()
+  
+  for(i in seq_along(y)) {
     
-    g = dat$gender == "Man"
+    m1 = PlackettLuce(R[[ov]][g & dat$year == y[i], ])
     
-    m1 = PlackettLuce(x[g,])
+    m2 = PlackettLuce(R[[ov]][!g & dat$year == y[i], ])
     
-    m2 = PlackettLuce(x[!g,])
+    c1 = rev(sort(coefficients(m1, log = F)))
     
-    c1 = coefficients(m1, log = F)
+    c2 = rev(sort(coefficients(m2, log = F)))
     
-    c2 = coefficients(m2, log = F)
+    age = data.frame(variety = c(names(c1[1:top]),
+                                 names(c2[1:top])),
+                     group = rep(names(gender_class), each = top),
+                     crop = crop[f])
     
-    sum(names(rev(sort(c1)))[1:top] %in% names(rev(sort(c2)))[1:top]) / top
+    age = merge(age,
+                variety_f[,c("variety", "release_year")], 
+                by = "variety", 
+                all.x = TRUE)
+    
+    age$age = y[i] - age$release_year
+    
+    age_top = rbind(age_top, age)
+    
+  }
+  
+ 
+  age_top$age[age_top$age < 0] = 0
+  
+  age_plot = 
+    ggplot(age_top, aes(x = group, y = age)) +
+    geom_boxplot() +
+    theme_minimal() +
+    labs(x = "", y = "Variety age (years)")
+  
+  ggsave(paste0(outputdir, "/age-preferred-varieties.pdf"),
+         plot = age_plot,
+         height = 12,
+         width = 10,
+         units = "cm")
+  
+  # ......................................
+  # ......................................
+  # Test hypothesis 4 ####
+  # 4. They prefer superiority over diversity in their choice of varieties.
+  stability = data.frame(rank = rep(1:top, times = 3),
+                         group = rep(c("All", names(gender_class)), each = top),
+                         crop = crop[f])
+  
+  for(i in seq_along(y)) {
+    
+    m1 = PlackettLuce(R[[ov]][dat$year == y[i], ])
+    
+    m2 = PlackettLuce(R[[ov]][g & dat$year == y[i], ])
+    
+    m3 = PlackettLuce(R[[ov]][!g & dat$year == y[i], ])
+    
+    c1 = rev(sort(coefficients(m1, log = F)))
+    
+    c2 = rev(sort(coefficients(m2, log = F)))
+    
+    c3 = rev(sort(coefficients(m3, log = F)))
+    
+    s = data.frame(variety = c(names(c1[1:top]),
+                               names(c2[1:top]),
+                               names(c3[1:top])))
+    
+    stability = cbind(stability, s)
+    
+    names(stability)[names(stability) == "variety"] = paste0("year", i)
+    
+  }
+  
+  stability = split(stability, stability$group)
+  
+  same = lapply(stability, function(x){
+   
+    v = unlist(x["year1"])
+    
+    s = c()
+    
+    for(i in 2:length(y)) {
+      s[i] = sum(unlist(x[paste0("year", i)]) %in% v) / top
+    }
+    
+    s
     
   })
   
-  share_top = data.frame(trait = traitlabels, 
-                         share_top = unlist(top_share),
-                         n_top = top,
-                         crop = crop[f])
+  same = data.frame(same_variety = unlist(same), 
+                            group = rep(c("All", names(gender_class)), each = length(y)),
+                            year = rep(1:length(y), times = length(gender_class) + 1),
+                            crop = crop[f])
+             
   
+  same = na.omit(same)
   
+  write.csv(same, paste0(outputdir, "/top-varieties-over-seasons.csv"))
   
+  # add results to a large data.frame
+  kendall_crops = rbind(kendall_crops, kendall)
   
-
+  ll_crops = rbind(ll_crops, llr)
+  
+  age_crops = rbind(age_crops, age_top)
+  
+  same_variety = rbind(same_variety, same)
   
 }
+
+
+save(kendall_crops, ll_crops, age_crops, same_variety, file = "output/results.rda")
+
+write.csv(kendall_crops, "output/kendall-correlation.csv", row.names = FALSE)
+
+write.csv(ll_crops, "output/share-top-varieties.csv", row.names = FALSE)
+
+write.csv(age_crops, "output/age-varieties.csv", row.names = FALSE)
+
+write.csv(same_variety, "output/same-variety-over-the-years.csv", row.names = FALSE)
+
+head(ll_crops)
+
+ggplot(ll_crops, aes(y = trait, x = share_top, shape = crop)) +
+  geom_point() +
+  theme_minimal() +
+  labs(x = "Share of top varieties",
+       y = "") +
+  #scale_color_brewer(palette = "Paired") +
+  scale_shape_manual(values = c(0:6,15:17, 8, 13, 10)) +
+  theme(legend.title = element_blank(),
+        legend.position = "bottom",
+        text = element_text(color = "grey5"))
+
+
+ggsave("output/varieties-preferred-men-women.pdf",
+       plot = last_plot(),
+       height = 18,
+       width = 18,
+       units = "cm")
+
+
+head(kendall_crops)
+
+
+kendall_crops %>%
+  group_by(trait, crop, group) %>%
+  summarise(mean = mean(kendallTau)) %>%
+  ungroup() %>%
+  ggplot(aes(y = trait, x = mean,
+                          #color = crop,
+                          shape = crop)) +
+  geom_point() +
+  facet_grid(~ group) +
+  theme_minimal() +
+  scale_shape_manual(values = c(0:6,15:17, 8, 13, 10)) +
+  #scale_color_brewer(palette = "Paired") +
+  labs(x = "Kendall correlation",
+       y = "") +
+  theme(legend.title = element_blank(),
+        legend.position = "bottom",
+        text = element_text(color = "grey10"))
+
+ggsave("output/kendall-correlation.pdf",
+       plot = last_plot(),
+       height = 18,
+       width = 30,
+       units = "cm")
+
+head(age_crops)
+
+ggplot(age_crops, aes(y = crop, x = age, color = group)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(x = "", y = "Variety age (years)") +
+  scale_color_manual(values = c("#225ea8", "#e31a1c")) +
+  theme(legend.title = element_blank(),
+        legend.position = "bottom",
+        text = element_text(color = "grey10"))
+
+
+ggsave("output/variety-age.pdf",
+       plot = last_plot(),
+       height = 15,
+       width = 18,
+       units = "cm")
+
 
 
 
