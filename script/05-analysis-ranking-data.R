@@ -243,20 +243,47 @@ for (f in seq_along(crop)) {
     m1 = PlackettLuce(x[g,])
     
     m2 = PlackettLuce(x[!g,])
-  
+    
     c1 = coefficients(m1, log = F)
       
     c2 = coefficients(m2, log = F)
     
-    sum(names(rev(sort(c1)))[1:top] %in% names(rev(sort(c2)))[1:top]) / top
+    a = sum(names(rev(sort(c1)))[1:top] %in% names(rev(sort(c2)))[1:top]) / top
+    
+    # run n permutations to test whether agreement 
+    # is random 
+    perms = c()
+    
+    nperm = 250
+    
+    for(pe in seq_len(nperm)) {
+     
+      m3 = PlackettLuce(x[sample(1:nrow(x), sum(!g)), ])
       
+      c3 = coefficients(m3, log = F)
+      
+      perms[pe]  = sum(names(rev(sort(c1)))[1:top] %in% names(rev(sort(c3)))[1:top]) / top
+        
+    }
+    
+    nabove = sum(abs(perms) >= abs(a))
+    
+    pval = (nabove + 1) / (nperm + 1) 
+    
+    data.frame(share_top = a, 
+               mean_random = mean(perms),
+               sd_random = sd(perms),
+               pval = pval)
+        
   })
   
-  share_top = data.frame(trait = traitlabels, 
-                         share_top = unlist(top_share),
-                         n_top = top,
-                         crop = crop[f])
+  top_share = do.call("rbind", top_share)
   
+  share_top = data.frame(crop = crop[f], 
+                         trait = traitlabels, 
+                         n_top = top)
+  
+  share_top = cbind(share_top, top_share)
   
   llr = merge(llr, share_top, by = "trait")
   
@@ -341,7 +368,6 @@ for (f in seq_along(crop)) {
           text = element_text(colour = "grey20"))
   
   kendall_plot
-  
   
   ggsave(paste0(outputdir, "/kendall-correlation.pdf"),
          plot = kendall_plot,
@@ -447,6 +473,8 @@ for (f in seq_along(crop)) {
   # run over years of trials
   age_top = data.frame()
   
+  m_age = median(y[1] - variety_f$release_year, na.rm = T)
+  
   for(i in seq_along(y)) {
     
     m1 = PlackettLuce(R[[ov]][g & dat$year == y[i], ])
@@ -476,11 +504,18 @@ for (f in seq_along(crop)) {
  
   age_top$age[age_top$age < 0] = 0
   
+  age_top$diff = age_top$age - m_age
+  
   age_plot = 
-    ggplot(age_top, aes(x = group, y = age)) +
+    ggplot(age_top, aes(x = group, y = diff)) +
     geom_boxplot() +
     theme_minimal() +
-    labs(x = "", y = "Variety age (years)")
+    labs(x = "", y = "Difference in variety age (median - age)")
+  
+  age_plot
+  
+  age_top$pval_ttest = summary(aov(lm(diff ~ group, data = age_top)))[[1]][1, 5]
+  
   
   ggsave(paste0(outputdir, "/age-preferred-varieties.pdf"),
          plot = age_plot,
@@ -570,13 +605,20 @@ write.csv(same_variety, "output/same-variety-over-the-years.csv", row.names = FA
 
 head(ll_crops)
 
-ggplot(ll_crops, aes(y = trait, x = share_top, shape = crop)) +
+shapes = c(0:6,15:17, 8, 13, 10)
+set.seed(123)
+shapes = sample(shapes)
+
+length(unique(ll_crops$crop))
+
+ggplot(ll_crops, aes(y = trait, x = share_top,
+                     shape = crop)) +
   geom_point() +
   theme_minimal() +
   labs(x = "Share of top varieties",
        y = "") +
-  #scale_color_brewer(palette = "Paired") +
-  scale_shape_manual(values = c(0:6,15:17, 8, 13, 10)) +
+  #scale_color_brewer(palette = "Set3") +
+  scale_shape_manual(values = shapes) +
   theme(legend.title = element_blank(),
         legend.position = "bottom",
         text = element_text(color = "grey5"))
@@ -591,19 +633,16 @@ ggsave("output/varieties-preferred-men-women.pdf",
 
 head(kendall_crops)
 
-
 kendall_crops %>%
   group_by(trait, crop, group) %>%
   summarise(mean = mean(kendallTau)) %>%
   ungroup() %>%
   ggplot(aes(y = trait, x = mean,
-                          #color = crop,
                           shape = crop)) +
   geom_point() +
   facet_grid(~ group) +
   theme_minimal() +
-  scale_shape_manual(values = c(0:6,15:17, 8, 13, 10)) +
-  #scale_color_brewer(palette = "Paired") +
+  scale_shape_manual(values = shapes) +
   labs(x = "Kendall correlation",
        y = "") +
   theme(legend.title = element_blank(),
@@ -618,10 +657,10 @@ ggsave("output/kendall-correlation.pdf",
 
 head(age_crops)
 
-ggplot(age_crops, aes(y = crop, x = age, color = group)) +
+ggplot(age_crops, aes(y = crop, x = diff, color = group)) +
   geom_boxplot() +
   theme_minimal() +
-  labs(x = "", y = "Variety age (years)") +
+  labs(x = "", y = "Difference in variety age (median - age)") +
   scale_color_manual(values = c("#225ea8", "#e31a1c")) +
   theme(legend.title = element_blank(),
         legend.position = "bottom",
