@@ -116,6 +116,8 @@ keep = apply(dat[pack_index], 1, function(x){
 
 keep = keep < 2  
 
+table(keep)
+
 dat = dat[keep, ]
 
 sort(table(dat$crop))
@@ -306,12 +308,17 @@ sum(is.na(dat$longitude))
 
 plot_map(dat, xy = c("longitude", "latitude"))
 
+plot_map(dat, c("longitude", "latitude"), minimap = F, map_provider = "OpenStreetMap.Mapnik")
 
 sum(is.na(dat$year))
 
 table(is.na(dat$year), dat$crop)
 
 dat = dat[order(dat$crop),]
+
+
+
+
 
 write.csv(dat, "data/tricot-data.csv")
 

@@ -231,7 +231,7 @@ for (f in seq_along(crop)) {
   # varieties, this because the difference might not be in the 
   # best varieties but in the worst
   # here we will see if the top varieties are the same for both genders
-  # and the percent of varieties in the top that occurr in man and woman group
+  # and the percent of varieties in the top that occur in man and woman group
   gender_class = table(dat$gender)
   
   top = ceiling(length(itemnames) * 0.25)
@@ -609,9 +609,36 @@ shapes = c(0:6,15:17, 8, 13, 10)
 set.seed(123)
 shapes = sample(shapes)
 
+ll_crops = read.csv("output/share-top-varieties.csv")
+
 length(unique(ll_crops$crop))
 
-ggplot(ll_crops, aes(y = trait, x = share_top,
+table(ll_crops$trait, ll_crops$crop)
+
+sel_traits = 
+  ll_crops %>% 
+  group_by(trait) %>% 
+  summarise(n = length(crop)) %>% 
+  filter(n > 3) 
+
+
+keep = ll_crops$trait %in% sel_traits$trait
+
+ll_crops = ll_crops[keep, ]
+
+ll_crops$trait = factor(ll_crops$trait, levels = rev(union(c("Overall Performance", "Yield",
+                                                             "Biomass Yield", "Taste", 
+                                                             "Market Value"),
+                                                       sel_traits$trait)))
+
+set.seed(750)
+z = runif(length(ll_crops$share_top), -0.04, 0.07)
+ll_crops$share_top = ll_crops$share_top + z
+
+ll_crops$share_top[ll_crops$share_top > 1] = 0.99
+
+ggplot(ll_crops, aes(y = trait, 
+                     x = share_top,
                      shape = crop)) +
   geom_point() +
   theme_minimal() +
@@ -630,6 +657,12 @@ ggsave("output/varieties-preferred-men-women.pdf",
        width = 18,
        units = "cm")
 
+ggsave("output/varieties-preferred-men-women.png",
+       plot = last_plot(),
+       dpi = 500,
+       height = 18,
+       width = 18,
+       units = "cm")
 
 head(kendall_crops)
 
