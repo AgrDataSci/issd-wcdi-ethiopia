@@ -85,6 +85,10 @@ same_variety = data.frame()
 
 tricot = tricot[, -grep("nutritional_quality|flour_and_baking", names(tricot))]
 
+
+# run over the crops and perform the analysis for each of them 
+# but also retain the results to produce charts with all crops together
+
 for (f in seq_along(crop)) {
   
   print(crop[f])
@@ -133,8 +137,6 @@ for (f in seq_along(crop)) {
   pack_index = paste0("variety_", letters[1:3])
   
   itemnames = sort(unique(unlist(dat[, pack_index])))
-  
-  itemnames
   
   # get the reference trait
   ov = which(traitlabels == "Overall Performance")
@@ -406,7 +408,7 @@ for (f in seq_along(crop)) {
   # View these trait correlations using PCA segmented by gender 
   # first fit a PL tree to see if gender influences 
   # variety performance
-  n_points = 3
+  n_points = 5
   plots_gender = list()
   
   for (i in seq_along(gender_class)) {
@@ -445,7 +447,7 @@ for (f in seq_along(crop)) {
     
   }
   
-  p = plots_gender[[1]] + plots_gender[[2]] 
+  p = plots_gender[[1]] + plots_gender[[2]] + plot_layout(ncol = 2) 
   
   p
   
@@ -644,12 +646,12 @@ ggplot(ll_crops, aes(y = trait,
                      shape = crop)) +
   geom_point() +
   theme_minimal() +
-  labs(x = "Share of top varieties",
+  labs(x = "Variety overlap in the 4th quartile",
        y = "") +
   scale_shape_manual(values = shapes) +
   theme(legend.title = element_blank(),
         legend.position = "bottom",
-        text = element_text(color = "grey5"))
+        text = element_text(color = "grey5", size = 13))
 
 
 ggsave("output/varieties-preferred-men-women.pdf",
