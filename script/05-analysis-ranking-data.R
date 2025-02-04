@@ -83,6 +83,8 @@ ll_crops = data.frame()
 
 same_variety = data.frame()
 
+tricot = tricot[, -grep("nutritional_quality|flour_and_baking", names(tricot))]
+
 for (f in seq_along(crop)) {
   
   print(crop[f])
@@ -644,7 +646,6 @@ ggplot(ll_crops, aes(y = trait,
   theme_minimal() +
   labs(x = "Share of top varieties",
        y = "") +
-  #scale_color_brewer(palette = "Set3") +
   scale_shape_manual(values = shapes) +
   theme(legend.title = element_blank(),
         legend.position = "bottom",
@@ -664,7 +665,21 @@ ggsave("output/varieties-preferred-men-women.png",
        width = 18,
        units = "cm")
 
+kendall_crops = read.csv("output/kendall-correlation.csv")
+
 head(kendall_crops)
+
+keep = kendall_crops$trait %in% sel_traits$trait
+
+kendall_crops = kendall_crops[keep, ]
+
+
+kendall_crops$trait = factor(kendall_crops$trait, levels = rev(union(c("Overall Performance", "Yield",
+                                                             "Biomass Yield", "Taste", 
+                                                             "Market Value"),
+                                                           sel_traits$trait)))
+
+kendall_crops$kendallTau[kendall_crops$kendallTau < 0] = NA
 
 kendall_crops %>%
   group_by(trait, crop, group) %>%
@@ -683,6 +698,12 @@ kendall_crops %>%
         text = element_text(color = "grey10"))
 
 ggsave("output/kendall-correlation.pdf",
+       plot = last_plot(),
+       height = 18,
+       width = 30,
+       units = "cm")
+
+ggsave("output/kendall-correlation.png",
        plot = last_plot(),
        height = 18,
        width = 30,
