@@ -20,10 +20,18 @@ authors:
     given-names: Mohammed
     orcid: https://orcid.org/NA
     affiliation: "Stichting Wageningen Research"
+  - family-names: Occelli
+    given-names: Martina
+    orcid: https://orcid.org/0000-0002-5339-8601
+    affiliation: "Cornell University"
+  - family-names: van Etten
+    given-names: Jacob
+    orcid: https://orcid.org/0000-0001-7554-2558
+    affiliation: "Alliance Bioversity International - CIAT"
   - family-names: de Sousa
     given-names: Kauê
     orcid: https://orcid.org/0000-0002-7571-7845
-    affiliation: "Alliance Bioversity International – CIAT; University of Inland Norway"
+    affiliation: "Alliance Bioversity International - CIAT; University of Inland Norway"
 repository-code: https://github.com/AgrDataSci/template-repo-data-analysis
 license: CC-BY-4.0
 keywords:

@@ -106,12 +106,44 @@
       ]
     },
     {
+      "name": "Occelli, Martina",
+      "nameType": "Personal",
+      "givenName": "Martina",
+      "familyName": "Occelli",
+      "affiliation": [
+        "Cornell University"
+      ],
+      "nameIdentifiers": [
+        {
+          "nameIdentifier": "https://orcid.org/0000-0002-5339-8601",
+          "nameIdentifierScheme": "ORCID",
+          "schemeUri": "https://orcid.org"
+        }
+      ]
+    },
+    {
+      "name": "van Etten, Jacob",
+      "nameType": "Personal",
+      "givenName": "Jacob",
+      "familyName": "van Etten",
+      "affiliation": [
+        "Alliance Bioversity International - CIAT"
+      ],
+      "nameIdentifiers": [
+        {
+          "nameIdentifier": "https://orcid.org/0000-0001-7554-2558",
+          "nameIdentifierScheme": "ORCID",
+          "schemeUri": "https://orcid.org"
+        }
+      ]
+    },
+    {
       "name": "de Sousa, Kauê",
       "nameType": "Personal",
       "givenName": "Kauê",
       "familyName": "de Sousa",
       "affiliation": [
-        "Alliance Bioversity International – CIAT",
+        "Alliance Bioversity International - CIAT",
         "University of Inland Norway"
       ],
       "nameIdentifiers": [
