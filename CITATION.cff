@@ -32,7 +32,7 @@ authors:
     given-names: Kauê
     orcid: https://orcid.org/0000-0002-7571-7845
     affiliation: "Alliance Bioversity International - CIAT; University of Inland Norway"
-repository-code: https://github.com/AgrDataSci/template-repo-data-analysis
+repository-code: https://github.com/AgrDataSci/issd-wcdi-ethiopia
 license: CC-BY-4.0
 keywords:
   - Crop Varietal Preference
