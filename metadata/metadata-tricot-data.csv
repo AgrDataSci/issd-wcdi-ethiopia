@@ -1,163 +1,150 @@
-﻿Name,Description,OntologyID,ValueType,Unit,ControlledVocabulary
-trial,,,,,
-year,,,,,
-crop,,,,,
-package_id,,,,,
-longitude,,,,,
-latitude,,,,,
-planting_date,,,,,
-district,,,,,
-village,,,,,
+Name,Description,OntologyID,ValueType,Unit,ControlledVocabulary
+trial,trial name registered on ClimMob v2,,string,,
+year,trial year registered on ClimMob v2,,string,,
+crop,crop tested in the trial,,string,,
+package_id,the package id ,,string,,
+longitude,longitudinal coordinate of the testing site,,numeric,,
+latitude,latitudinal coordinate of the testing site,,numeric,,
+planting_date,date that the experiment was set in the testing site,,date,,
+district,district where the testing site was set,,string,,
+village,village where the testing site was set,,string,,
 age,age of the respondent,,integer,year,
 gender,gender of the respondent,,vocabulary encoding scheme,,M|F
 variety_a,name of the first variety tested,,string,,
 variety_b,name of the second variety tested,,string,,
 variety_c,name of the third variety tested,,string,,
-overall_performance_best,which variety was less preferred among the three tested,,vocabulary encoding scheme,,A|B|C
-overall_performance_worst,,,,,
-deliver_point_longitude,,,,,
-deliver_point_latitude,,,,,
-trial_longitude,,,,,
-trial_latitude,,,,,
-harvest_date,,,,,
-how_much_did_it_rain_during_the_crop_season,,,,,
-how_was_the_rain,,,,,
-was_the_crop_season_warmer_or_colder_than_usual,,,,,
-yield_variety_a_kg,,,,,
-yield_variety_b_kg,,,,,
-yield_variety_c_kg,,,,,
-grown_again,,,,,
-vigor_best,,,,,
-vigor_worst,,,,,
-faster_maturity_best,,,,,
-faster_maturity_worst,,,,,
-disease_resistance_best,,,,,
-disease_resistance_worst,,,,,
-yield_best,,,,,
-yield_worst,,,,,
-market_value_best,,,,,
-market_value_worst,,,,,
-lodging_tolerance_best,,,,,
-lodging_tolerance_worst,,,,,
-adaptability_to_local_environment_best,,,,,
-adaptability_to_local_environment_worst,,,,,
-biomass_yield_best,,,,,
-biomass_yield_worst,,,,,
-panicle_performance_best,,,,,
-panicle_performance_worst,,,,,
-tillering_capacity_best,,,,,
-tillering_capacity_worst,,,,,
-spike_length_best,,,,,
-spike_length_worst,,,,,
-frost_resistance_best,,,,,
-frost_resistance_worst,,,,,
-bird_attack_best,,,,,
-bird_attack_worst,,,,,
-pod_performance_best,,,,,
-pod_performance_worst,,,,,
-pest_resistance_best,,,,,
-pest_resistance_worst,,,,,
-slope,,,,,
-soil_quality,,,,,
-seed_color_best,,,,,
-seed_color_worst,,,,,
-straw_biomass_best,,,,,
-straw_biomass_worst,,,,,
-drought_resistance_best,,,,,
-drought_resistance_worst,,,,,
-taste_best,,,,,
-taste_worst,,,,,
-fertilization,,,,,
-name_of_the_local_variety,,,,,
-germination_best,,,,,
-germination_worst,,,,,
-plant_architecture_best,,,,,
-plant_architecture_worst,,,,,
-seed_size_best,,,,,
-seed_size_worst,,,,,
-flour_and_baking_quality_best,,,,,
-flour_and_baking_quality_worst,,,,,
-nutritional_quality_best,,,,,
-nutritional_quality_worst,,,,,
-soil_texture,,,,,
-soil_affected_by_salt,,,,,
-leaf_best,,,,,
-leaf_worst,,,,,
-grain_per_spike_best,,,,,
-grain_per_spike_worst,,,,,
-shoot_fly_resistance_best,,,,,
-shoot_fly_resistance_worst,,,,,
-ear_length_best,,,,,
-ear_length_worst,,,,,
-number_of_ear_per_plant_best,,,,,
-number_of_ear_per_plant_worst,,,,,
-kernel_size_best,,,,,
-kernel_size_worst,,,,,
-productive_tiller_best,,,,,
-productive_tiller_worst,,,,,
-straw_yield_best,,,,,
-straw_yield_worst,,,,,
-irrigation,,,,,
-the_spike_has_more_than_2rows_best,,,,,
-the_spike_has_more_than_2rows_worst,,,,,
-white_seed_color_best,,,,,
-white_seed_color_worst,,,,,
-perception_best,,,,,
-perception_worst,,,,,
-not_fall_due_to_height_best,,,,,
-not_fall_due_to_height_worst,,,,,
-rust_tolerance_best,,,,,
-rust_tolerance_worst,,,,,
-injera_quality_best,,,,,
-injera_quality_worst,,,,,
-ranching_best,,,,,
-ranching_worst,,,,,
-uniform_maturity_best,,,,,
-uniform_maturity_worst,,,,,
-good_seedling_best,,,,,
-good_seedling_worst,,,,,
-number_of_seed_per_pods_best,,,,,
-number_of_seed_per_pods_worst,,,,,
-number_of_pods_per_plant_best,,,,,
-number_of_pods_per_plant_worst,,,,,
-begin_flowering_at_bottom_best,,,,,
-begin_flowering_at_bottom_worst,,,,,
-steam_strength_best,,,,,
-steam_strength_worst,,,,,
-maturity_uniformity_best,,,,,
-maturity_uniformity_worst,,,,,
-treshability_best,,,,,
-treshability_worst,,,,,
-pod_length_best,,,,,
-pod_length_worst,,,,,
-stalk_yield_best,,,,,
-stalk_yield_worst,,,,,
-injera_softness_best,,,,,
-injera_softness_worst,,,,,
-rain_resistance_best,,,,,
-rain_resistance_worst,,,,,
-number_of_branches_best,,,,,
-number_of_branches_worst,,,,,
-cooking_quality_best,,,,,
-cooking_quality_worst,,,,,
-flowering_best,,,,,
-flowering_worst,,,,,
-spike_quality_best,,,,,
-spike_quality_worst,,,,,
-stress_tolerant_best,,,,,
-stress_tolerant_worst,,,,,
-shattering_best,,,,,
-shattering_worst,,,,,
-stalk_used_for_various_purposes_best,,,,,
-stalk_used_for_various_purposes_worst,,,,,
-good_for_different_food_preparation_best,,,,,
-good_for_different_food_preparation_worst,,,,,
-ground_cover_best,,,,,
-ground_cover_worst,,,,,
-striga_resistance_best,,,,,
-striga_resistance_worst,,,,,
-heavy_stem_best,,,,,
-heavy_stem_worst,,,,,
-mount_of_flour_best,,,,,
-mount_of_flour_worst,,,,,
-location,,,,,
+overall_performance_best,which variety was the most preferred among the three tested for Overall Performance ,,vocabulary encoding scheme,,A|B|C
+overall_performance_worst,which variety was the least preferred among the three tested for Overall Performance ,,vocabulary encoding scheme,,A|B|C
+harvest_date,date of harvest,,date,,
+yield_variety_a_kg,yield of plot A in kg,,numeric,,
+yield_variety_b_kg,yield of plot B in kg,,numeric,,
+yield_variety_c_kg,yield of plot C in kg,,numeric,,
+grown_again,which variety would you like to grow again in the next season,,string,,
+vigor_best,which variety was the most preferred among the three tested for Vigor ,,vocabulary encoding scheme,,A|B|C
+vigor_worst,which variety was the least preferred among the three tested for Vigor ,,vocabulary encoding scheme,,A|B|C
+faster_maturity_best,which variety was the most preferred among the three tested for Faster Maturity ,,vocabulary encoding scheme,,A|B|C
+faster_maturity_worst,which variety was the least preferred among the three tested for Faster Maturity ,,vocabulary encoding scheme,,A|B|C
+disease_resistance_best,which variety was the most preferred among the three tested for Disease Resistance ,,vocabulary encoding scheme,,A|B|C
+disease_resistance_worst,which variety was the least preferred among the three tested for Disease Resistance ,,vocabulary encoding scheme,,A|B|C
+yield_best,which variety was the most preferred among the three tested for Yield ,,vocabulary encoding scheme,,A|B|C
+yield_worst,which variety was the least preferred among the three tested for Yield ,,vocabulary encoding scheme,,A|B|C
+market_value_best,which variety was the most preferred among the three tested for Market Value ,,vocabulary encoding scheme,,A|B|C
+market_value_worst,which variety was the least preferred among the three tested for Market Value ,,vocabulary encoding scheme,,A|B|C
+lodging_tolerance_best,which variety was the most preferred among the three tested for Lodging Tolerance ,,vocabulary encoding scheme,,A|B|C
+lodging_tolerance_worst,which variety was the least preferred among the three tested for Lodging Tolerance ,,vocabulary encoding scheme,,A|B|C
+adaptability_to_local_environment_best,which variety was the most preferred among the three tested for Adaptability To Local Environment ,,vocabulary encoding scheme,,A|B|C
+adaptability_to_local_environment_worst,which variety was the least preferred among the three tested for Adaptability To Local Environment ,,vocabulary encoding scheme,,A|B|C
+biomass_yield_best,which variety was the most preferred among the three tested for Biomass Yield ,,vocabulary encoding scheme,,A|B|C
+biomass_yield_worst,which variety was the least preferred among the three tested for Biomass Yield ,,vocabulary encoding scheme,,A|B|C
+panicle_performance_best,which variety was the most preferred among the three tested for Panicle Performance ,,vocabulary encoding scheme,,A|B|C
+panicle_performance_worst,which variety was the least preferred among the three tested for Panicle Performance ,,vocabulary encoding scheme,,A|B|C
+tillering_capacity_best,which variety was the most preferred among the three tested for Tillering Capacity ,,vocabulary encoding scheme,,A|B|C
+tillering_capacity_worst,which variety was the least preferred among the three tested for Tillering Capacity ,,vocabulary encoding scheme,,A|B|C
+spike_length_best,which variety was the most preferred among the three tested for Spike Length ,,vocabulary encoding scheme,,A|B|C
+spike_length_worst,which variety was the least preferred among the three tested for Spike Length ,,vocabulary encoding scheme,,A|B|C
+frost_resistance_best,which variety was the most preferred among the three tested for Frost Resistance ,,vocabulary encoding scheme,,A|B|C
+frost_resistance_worst,which variety was the least preferred among the three tested for Frost Resistance ,,vocabulary encoding scheme,,A|B|C
+bird_attack_best,which variety was the most preferred among the three tested for Bird Attack ,,vocabulary encoding scheme,,A|B|C
+bird_attack_worst,which variety was the least preferred among the three tested for Bird Attack ,,vocabulary encoding scheme,,A|B|C
+pod_performance_best,which variety was the most preferred among the three tested for Pod Performance ,,vocabulary encoding scheme,,A|B|C
+pod_performance_worst,which variety was the least preferred among the three tested for Pod Performance ,,vocabulary encoding scheme,,A|B|C
+pest_resistance_best,which variety was the most preferred among the three tested for Pest Resistance ,,vocabulary encoding scheme,,A|B|C
+pest_resistance_worst,which variety was the least preferred among the three tested for Pest Resistance ,,vocabulary encoding scheme,,A|B|C
+seed_color_best,which variety was the most preferred among the three tested for Seed Color ,,vocabulary encoding scheme,,A|B|C
+seed_color_worst,which variety was the least preferred among the three tested for Seed Color ,,vocabulary encoding scheme,,A|B|C
+straw_biomass_best,which variety was the most preferred among the three tested for Straw Biomass ,,vocabulary encoding scheme,,A|B|C
+straw_biomass_worst,which variety was the least preferred among the three tested for Straw Biomass ,,vocabulary encoding scheme,,A|B|C
+drought_resistance_best,which variety was the most preferred among the three tested for Drought Resistance ,,vocabulary encoding scheme,,A|B|C
+drought_resistance_worst,which variety was the least preferred among the three tested for Drought Resistance ,,vocabulary encoding scheme,,A|B|C
+taste_best,which variety was the most preferred among the three tested for Taste ,,vocabulary encoding scheme,,A|B|C
+taste_worst,which variety was the least preferred among the three tested for Taste ,,vocabulary encoding scheme,,A|B|C
+name_of_the_local_variety,the name of the local variety,,string,,
+germination_best,which variety was the most preferred among the three tested for Germination ,,vocabulary encoding scheme,,A|B|C
+germination_worst,which variety was the least preferred among the three tested for Germination ,,vocabulary encoding scheme,,A|B|C
+plant_architecture_best,which variety was the most preferred among the three tested for Plant Architecture ,,vocabulary encoding scheme,,A|B|C
+plant_architecture_worst,which variety was the least preferred among the three tested for Plant Architecture ,,vocabulary encoding scheme,,A|B|C
+seed_size_best,which variety was the most preferred among the three tested for Seed Size ,,vocabulary encoding scheme,,A|B|C
+seed_size_worst,which variety was the least preferred among the three tested for Seed Size ,,vocabulary encoding scheme,,A|B|C
+flour_and_baking_quality_best,which variety was the most preferred among the three tested for Flour And Baking Quality ,,vocabulary encoding scheme,,A|B|C
+flour_and_baking_quality_worst,which variety was the least preferred among the three tested for Flour And Baking Quality ,,vocabulary encoding scheme,,A|B|C
+nutritional_quality_best,which variety was the most preferred among the three tested for Nutritional Quality ,,vocabulary encoding scheme,,A|B|C
+nutritional_quality_worst,which variety was the least preferred among the three tested for Nutritional Quality ,,vocabulary encoding scheme,,A|B|C
+leaf_best,which variety was the most preferred among the three tested for Leaf ,,vocabulary encoding scheme,,A|B|C
+leaf_worst,which variety was the least preferred among the three tested for Leaf ,,vocabulary encoding scheme,,A|B|C
+grain_per_spike_best,which variety was the most preferred among the three tested for Grain Per Spike ,,vocabulary encoding scheme,,A|B|C
+grain_per_spike_worst,which variety was the least preferred among the three tested for Grain Per Spike ,,vocabulary encoding scheme,,A|B|C
+shoot_fly_resistance_best,which variety was the most preferred among the three tested for Shoot Fly Resistance ,,vocabulary encoding scheme,,A|B|C
+shoot_fly_resistance_worst,which variety was the least preferred among the three tested for Shoot Fly Resistance ,,vocabulary encoding scheme,,A|B|C
+ear_length_best,which variety was the most preferred among the three tested for Ear Length ,,vocabulary encoding scheme,,A|B|C
+ear_length_worst,which variety was the least preferred among the three tested for Ear Length ,,vocabulary encoding scheme,,A|B|C
+number_of_ear_per_plant_best,which variety was the most preferred among the three tested for Number Of Ear Per Plant ,,vocabulary encoding scheme,,A|B|C
+number_of_ear_per_plant_worst,which variety was the least preferred among the three tested for Number Of Ear Per Plant ,,vocabulary encoding scheme,,A|B|C
+kernel_size_best,which variety was the most preferred among the three tested for Kernel Size ,,vocabulary encoding scheme,,A|B|C
+kernel_size_worst,which variety was the least preferred among the three tested for Kernel Size ,,vocabulary encoding scheme,,A|B|C
+productive_tiller_best,which variety was the most preferred among the three tested for Productive Tiller ,,vocabulary encoding scheme,,A|B|C
+productive_tiller_worst,which variety was the least preferred among the three tested for Productive Tiller ,,vocabulary encoding scheme,,A|B|C
+straw_yield_best,which variety was the most preferred among the three tested for Straw Yield ,,vocabulary encoding scheme,,A|B|C
+straw_yield_worst,which variety was the least preferred among the three tested for Straw Yield ,,vocabulary encoding scheme,,A|B|C
+irrigation,whether the plot was irrigated or not,,vocabulary encoding scheme,,Yes|No
+the_spike_has_more_than_2rows_best,which variety was the most preferred among the three tested for The Spike Has More Than 2rows ,,vocabulary encoding scheme,,A|B|C
+the_spike_has_more_than_2rows_worst,which variety was the least preferred among the three tested for The Spike Has More Than 2rows ,,vocabulary encoding scheme,,A|B|C
+white_seed_color_best,which variety was the most preferred among the three tested for White Seed Color ,,vocabulary encoding scheme,,A|B|C
+white_seed_color_worst,which variety was the least preferred among the three tested for White Seed Color ,,vocabulary encoding scheme,,A|B|C
+perception_best,which variety was the most preferred among the three tested for Perception ,,vocabulary encoding scheme,,A|B|C
+perception_worst,which variety was the least preferred among the three tested for Perception ,,vocabulary encoding scheme,,A|B|C
+not_fall_due_to_height_best,which variety was the most preferred among the three tested for Not Fall Due To Height ,,vocabulary encoding scheme,,A|B|C
+not_fall_due_to_height_worst,which variety was the least preferred among the three tested for Not Fall Due To Height ,,vocabulary encoding scheme,,A|B|C
+rust_tolerance_best,which variety was the most preferred among the three tested for Rust Tolerance ,,vocabulary encoding scheme,,A|B|C
+rust_tolerance_worst,which variety was the least preferred among the three tested for Rust Tolerance ,,vocabulary encoding scheme,,A|B|C
+injera_quality_best,which variety was the most preferred among the three tested for Injera Quality ,,vocabulary encoding scheme,,A|B|C
+injera_quality_worst,which variety was the least preferred among the three tested for Injera Quality ,,vocabulary encoding scheme,,A|B|C
+ranching_best,which variety was the most preferred among the three tested for Ranching ,,vocabulary encoding scheme,,A|B|C
+ranching_worst,which variety was the least preferred among the three tested for Ranching ,,vocabulary encoding scheme,,A|B|C
+uniform_maturity_best,which variety was the most preferred among the three tested for Uniform Maturity ,,vocabulary encoding scheme,,A|B|C
+uniform_maturity_worst,which variety was the least preferred among the three tested for Uniform Maturity ,,vocabulary encoding scheme,,A|B|C
+good_seedling_best,which variety was the most preferred among the three tested for Good Seedling ,,vocabulary encoding scheme,,A|B|C
+good_seedling_worst,which variety was the least preferred among the three tested for Good Seedling ,,vocabulary encoding scheme,,A|B|C
+number_of_seed_per_pods_best,which variety was the most preferred among the three tested for Number Of Seed Per Pods ,,vocabulary encoding scheme,,A|B|C
+number_of_seed_per_pods_worst,which variety was the least preferred among the three tested for Number Of Seed Per Pods ,,vocabulary encoding scheme,,A|B|C
+number_of_pods_per_plant_best,which variety was the most preferred among the three tested for Number Of Pods Per Plant ,,vocabulary encoding scheme,,A|B|C
+number_of_pods_per_plant_worst,which variety was the least preferred among the three tested for Number Of Pods Per Plant ,,vocabulary encoding scheme,,A|B|C
+begin_flowering_at_bottom_best,which variety was the most preferred among the three tested for Begin Flowering At Bottom ,,vocabulary encoding scheme,,A|B|C
+begin_flowering_at_bottom_worst,which variety was the least preferred among the three tested for Begin Flowering At Bottom ,,vocabulary encoding scheme,,A|B|C
+steam_strength_best,which variety was the most preferred among the three tested for Steam Strength ,,vocabulary encoding scheme,,A|B|C
+steam_strength_worst,which variety was the least preferred among the three tested for Steam Strength ,,vocabulary encoding scheme,,A|B|C
+maturity_uniformity_best,which variety was the most preferred among the three tested for Maturity Uniformity ,,vocabulary encoding scheme,,A|B|C
+maturity_uniformity_worst,which variety was the least preferred among the three tested for Maturity Uniformity ,,vocabulary encoding scheme,,A|B|C
+treshability_best,which variety was the most preferred among the three tested for Treshability ,,vocabulary encoding scheme,,A|B|C
+treshability_worst,which variety was the least preferred among the three tested for Treshability ,,vocabulary encoding scheme,,A|B|C
+pod_length_best,which variety was the most preferred among the three tested for Pod Length ,,vocabulary encoding scheme,,A|B|C
+pod_length_worst,which variety was the least preferred among the three tested for Pod Length ,,vocabulary encoding scheme,,A|B|C
+stalk_yield_best,which variety was the most preferred among the three tested for Stalk Yield ,,vocabulary encoding scheme,,A|B|C
+stalk_yield_worst,which variety was the least preferred among the three tested for Stalk Yield ,,vocabulary encoding scheme,,A|B|C
+injera_softness_best,which variety was the most preferred among the three tested for Injera Softness ,,vocabulary encoding scheme,,A|B|C
+injera_softness_worst,which variety was the least preferred among the three tested for Injera Softness ,,vocabulary encoding scheme,,A|B|C
+rain_resistance_best,which variety was the most preferred among the three tested for Rain Resistance ,,vocabulary encoding scheme,,A|B|C
+rain_resistance_worst,which variety was the least preferred among the three tested for Rain Resistance ,,vocabulary encoding scheme,,A|B|C
+number_of_branches_best,which variety was the most preferred among the three tested for Number Of Branches ,,vocabulary encoding scheme,,A|B|C
+number_of_branches_worst,which variety was the least preferred among the three tested for Number Of Branches ,,vocabulary encoding scheme,,A|B|C
+cooking_quality_best,which variety was the most preferred among the three tested for Cooking Quality ,,vocabulary encoding scheme,,A|B|C
+cooking_quality_worst,which variety was the least preferred among the three tested for Cooking Quality ,,vocabulary encoding scheme,,A|B|C
+flowering_best,which variety was the most preferred among the three tested for Flowering ,,vocabulary encoding scheme,,A|B|C
+flowering_worst,which variety was the least preferred among the three tested for Flowering ,,vocabulary encoding scheme,,A|B|C
+spike_quality_best,which variety was the most preferred among the three tested for Spike Quality ,,vocabulary encoding scheme,,A|B|C
+spike_quality_worst,which variety was the least preferred among the three tested for Spike Quality ,,vocabulary encoding scheme,,A|B|C
+stress_tolerant_best,which variety was the most preferred among the three tested for Stress Tolerant ,,vocabulary encoding scheme,,A|B|C
+stress_tolerant_worst,which variety was the least preferred among the three tested for Stress Tolerant ,,vocabulary encoding scheme,,A|B|C
+shattering_best,which variety was the most preferred among the three tested for Shattering ,,vocabulary encoding scheme,,A|B|C
+shattering_worst,which variety was the least preferred among the three tested for Shattering ,,vocabulary encoding scheme,,A|B|C
+stalk_used_for_various_purposes_best,which variety was the most preferred among the three tested for Stalk Used For Various Purposes ,,vocabulary encoding scheme,,A|B|C
+stalk_used_for_various_purposes_worst,which variety was the least preferred among the three tested for Stalk Used For Various Purposes ,,vocabulary encoding scheme,,A|B|C
+good_for_different_food_preparation_best,which variety was the most preferred among the three tested for Good For Different Food Preparation ,,vocabulary encoding scheme,,A|B|C
+good_for_different_food_preparation_worst,which variety was the least preferred among the three tested for Good For Different Food Preparation ,,vocabulary encoding scheme,,A|B|C
+ground_cover_best,which variety was the most preferred among the three tested for Ground Cover ,,vocabulary encoding scheme,,A|B|C
+ground_cover_worst,which variety was the least preferred among the three tested for Ground Cover ,,vocabulary encoding scheme,,A|B|C
+striga_resistance_best,which variety was the most preferred among the three tested for Striga Resistance ,,vocabulary encoding scheme,,A|B|C
+striga_resistance_worst,which variety was the least preferred among the three tested for Striga Resistance ,,vocabulary encoding scheme,,A|B|C
+heavy_stem_best,which variety was the most preferred among the three tested for Heavy Stem ,,vocabulary encoding scheme,,A|B|C
+heavy_stem_worst,which variety was the least preferred among the three tested for Heavy Stem ,,vocabulary encoding scheme,,A|B|C
+mount_of_flour_best,which variety was the most preferred among the three tested for Mount Of Flour ,,vocabulary encoding scheme,,A|B|C
+mount_of_flour_worst,which variety was the least preferred among the three tested for Mount Of Flour ,,vocabulary encoding scheme,,A|B|C
