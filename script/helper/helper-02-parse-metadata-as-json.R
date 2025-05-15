@@ -13,7 +13,8 @@ communities = read_excel(file, sheet = "communities")
 dates = read_excel(file, sheet = "dates")
 
 # Check required fields in metadata
-required_fields = c("title", "version", "publication_date", "publisher", "description", "language", "resource_type", "license")
+required_fields = c("title", "version", "publication_date", "publisher",
+                    "description", "language", "resource_type", "license")
 missing_fields = setdiff(required_fields, metadata$key)
 if (length(missing_fields) > 0) {
   cat("Missing required metadata fields:", paste(missing_fields, collapse = ", "), "\n")
