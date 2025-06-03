@@ -18,7 +18,7 @@ library("PlackettLuce")
 library("ClimMobTools")
 library("readxl")
 source("https://raw.githubusercontent.com/AgrDataSci/ClimMob-analysis/master/modules/01_functions.R")
-source("script/helper-01-function.R")
+source("script/helper/helper-03-function.R")
 
 # .......................................
 # .......................................
@@ -258,15 +258,26 @@ for (f in seq_along(crop)) {
     # is random 
     perms = c()
     
-    nperm = 250
+    nperm = 999
+    
+    cat("start permutation test for ", crop[f], "\n")
     
     for(pe in seq_len(nperm)) {
      
-      m3 = PlackettLuce(x[sample(1:nrow(x), sum(!g)), ])
+      print(pe)
+      # sample over true and false for gender
+      # meaning that we pick a random index 
+      sample_index = sample(1:nrow(x))
+      
+      m3 = PlackettLuce(x[g[sample_index],])
+      
+      m4 = PlackettLuce(x[!g[sample_index],])
       
       c3 = coefficients(m3, log = F)
       
-      perms[pe]  = sum(names(rev(sort(c1)))[1:top] %in% names(rev(sort(c3)))[1:top]) / top
+      c4 = coefficients(m4, log = F)
+      
+      perms[pe]  = sum(names(rev(sort(c3)))[1:top] %in% names(rev(sort(c4)))[1:top]) / top
         
     }
     
