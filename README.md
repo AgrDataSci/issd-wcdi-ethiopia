@@ -1,5 +1,6 @@
 <!-- badges: start -->
 [![License](https://img.shields.io/badge/License-CC%20BY%204.0-blue.svg)](https://creativecommons.org/licenses/by/4.0/deed.en) 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15586718.svg)](https://doi.org/10.5281/zenodo.15586718)
 <!-- badges: end --> 
 
 ## Replication data and code for: "Citizen science in Ethiopia contests prevailing assumptions in formal seed systems concerning men and women smallholders’ preferences for crop varieties and traits, revealing their latent demand for diversity"
