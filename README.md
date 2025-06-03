@@ -5,6 +5,7 @@
 ## Replication data and code for: "Citizen science in Ethiopia contests prevailing assumptions in formal seed systems concerning men and women smallholders’ preferences for crop varieties and traits, revealing their latent demand for diversity"
 > Gareth Denis Borman, Kauê de Sousa, Mohammed Hassena Beko, Legesse Abate, Mirjam Schaap, Martina Occelli, Jacob van Etten
 
+
 ### Highlights
 - Central planning in Ethiopia’s formal seed systems limits participation of non-state actors
 - Breeders and seed producers have insufficient ways of knowing what farmers want
