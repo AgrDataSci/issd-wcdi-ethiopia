@@ -240,6 +240,8 @@ for (f in seq_along(crop)) {
   
   top = ceiling(length(itemnames) * 0.25)
   
+  cat("start permutation test for ", crop[f], "\n")
+  
   top_share = lapply(R, function(x){
     
     g = dat$gender == names(gender_class)[[1]]
@@ -259,8 +261,6 @@ for (f in seq_along(crop)) {
     perms = c()
     
     nperm = 999
-    
-    cat("start permutation test for ", crop[f], "\n")
     
     for(pe in seq_len(nperm)) {
      
